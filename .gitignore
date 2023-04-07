@@ -1,3 +1,4 @@
+docker-*
 /Dockerfile/redis/redis.conf
 /docker-compose.yml
 /wac/
