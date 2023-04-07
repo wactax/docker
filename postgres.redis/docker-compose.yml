@@ -1,37 +1,37 @@
 version: '3'
 
 services:
-  api:
-    container_name: wac-api
-    image: node:19-alpine
-    restart: always
-    ports:
-      - 8880:8880
-    entrypoint: sh -c "cd src && node --loader=@w5/jsext ./_/Http/main.js"
-    volumes:
-      - ../api/src:/src
-    environment:
-      PG_HOST: ${PG_HOST}
-      PG_DB: ${PG_DB}
-      PG_USER: ${PG_USER}
-      PG_PORT: ${PG_PORT}
-      PG_POOL_CONN: ${PG_POOL_CONN}
-      PG_SSL: ${PG_SSL}
-      PG_PASSWORD: ${PG_PASSWORD}
-      PG_URI: ${PG_URI}
-      REDIS_DB: ${REDIS_DB}
-      REDIS_USER: ${REDIS_USER}
-      REDIS_PASSWORD: ${REDIS_PASSWORD}
-      REDIS_HOST: ${REDIS_HOST}
-      REDIS_PORT: ${REDIS_PORT}
-      REDIS_HOST_PORT: ${REDIS_HOST_PORT}
-      MAIL_SECURE: ${MAIL_SECURE}
-      MAIL_HOST: ${MAIL_HOST}
-      MAIL_PORT: ${MAIL_PORT}
-      MAIL_USER: ${MAIL_USER}
-      MAIL_FROM: ${MAIL_FROM}
-      MAIL_PASSWORD: ${MAIL_PASSWORD}
-      HTTP_CPU_NUM: ${HTTP_CPU_NUM}
+  # api:
+  #   container_name: wac-api
+  #   image: node:19-alpine
+  #   restart: always
+  #   ports:
+  #     - 8880:8880
+  #   entrypoint: sh -c "cd src && node --loader=@w5/jsext ./_/Http/main.js"
+  #   volumes:
+  #     - ../api/src:/src
+  #   environment:
+  #     PG_HOST: ${PG_HOST}
+  #     PG_DB: ${PG_DB}
+  #     PG_USER: ${PG_USER}
+  #     PG_PORT: ${PG_PORT}
+  #     PG_POOL_CONN: ${PG_POOL_CONN}
+  #     PG_SSL: ${PG_SSL}
+  #     PG_PASSWORD: ${PG_PASSWORD}
+  #     PG_URI: ${PG_URI}
+  #     REDIS_DB: ${REDIS_DB}
+  #     REDIS_USER: ${REDIS_USER}
+  #     REDIS_PASSWORD: ${REDIS_PASSWORD}
+  #     REDIS_HOST: ${REDIS_HOST}
+  #     REDIS_PORT: ${REDIS_PORT}
+  #     REDIS_HOST_PORT: ${REDIS_HOST_PORT}
+  #     MAIL_SECURE: ${MAIL_SECURE}
+  #     MAIL_HOST: ${MAIL_HOST}
+  #     MAIL_PORT: ${MAIL_PORT}
+  #     MAIL_USER: ${MAIL_USER}
+  #     MAIL_FROM: ${MAIL_FROM}
+  #     MAIL_PASSWORD: ${MAIL_PASSWORD}
+  #     HTTP_CPU_NUM: ${HTTP_CPU_NUM}
   redis:
     container_name: wac-redis
     image:  redis/redis-stack-server:7.0.6-RC8
