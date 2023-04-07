@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+DIR=$(realpath ${0%/*/*/*})
+
+LOG=/var/log/crontab/${3%.sh}/$4
+mkdir -p $LOG
+
+run="cd $2 && timeout 24h ./${@:3}"
+
+job="$1 * * eval \$(rtx env) && $run > $LOG/$5.$6.log 2>&1"
+
+crontab -l | (
+  cat | grep -v -F "$run"
+  echo "$job"
+) | crontab -
+
+echo -e "\033[32mcrontab added\033[0m"
+echo "$job"

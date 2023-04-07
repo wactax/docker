@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    restart: always
+    ports:
+      - 8001:8001
+    volumes:
+      - ./data/redisinsight:/db
+    environment:
+      RITRUSTEDORIGINS: https://redis.usr.tax
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGPASSFILE: /var/lib/pgadmin/pgpass
+      PGADMIN_CONFIG_SERVER_MODE: "True"
+    volumes:
+      - ./data/pgadmin/pgadmin/servers.json:/pgadmin4/servers.json
+      - ./data/pgadmin/config_local.py:/pgadmin4/config_local.py
+      - ./data/pgadmin/pgadmin/pgpass:/pgpass
+      - /var/log/docker/admin/pgadmin:/var/log
+      - /tmp/docker/admin/pgadmin:/tmp
+    ports:
+      - 8800:80
+    entrypoint: >
+      /bin/sh -c "
+      cp /pgpass /var/lib/pgadmin/pgpass;
+      chmod 600 /var/lib/pgadmin/pgpass;
+      exec /entrypoint.sh
+      "
+

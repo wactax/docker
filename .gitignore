@@ -1,0 +1,6 @@
+/Dockerfile/redis/redis.conf
+/docker-compose.yml
+/wac/
+bun.lockb
+node_modules/
+/api/src

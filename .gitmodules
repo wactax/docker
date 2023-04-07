@@ -1,0 +1,3 @@
+[submodule "Dockerfile/postgres/plugin/pguint"]
+	path = Dockerfile/postgres/plugin/pguint
+	url = git@github.com:wacfork/pguint.git

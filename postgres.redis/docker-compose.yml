@@ -1,0 +1,68 @@
+version: '3'
+
+services:
+  api:
+    container_name: wac-api
+    image: node:19-alpine
+    restart: always
+    ports:
+      - 8880:8880
+    entrypoint: sh -c "cd src && node --loader=@w5/jsext ./_/Http/main.js"
+    volumes:
+      - ../api/src:/src
+    environment:
+      PG_HOST: ${PG_HOST}
+      PG_DB: ${PG_DB}
+      PG_USER: ${PG_USER}
+      PG_PORT: ${PG_PORT}
+      PG_POOL_CONN: ${PG_POOL_CONN}
+      PG_SSL: ${PG_SSL}
+      PG_PASSWORD: ${PG_PASSWORD}
+      PG_URI: ${PG_URI}
+      REDIS_DB: ${REDIS_DB}
+      REDIS_USER: ${REDIS_USER}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_HOST_PORT: ${REDIS_HOST_PORT}
+      MAIL_SECURE: ${MAIL_SECURE}
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_USER: ${MAIL_USER}
+      MAIL_FROM: ${MAIL_FROM}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      HTTP_CPU_NUM: ${HTTP_CPU_NUM}
+  redis:
+    container_name: wac-redis
+    image:  redis/redis-stack-server:7.0.6-RC8
+    restart: always
+    environment:
+      REDIS_DATA_DIR: /data
+      REDIS_ARGS: >
+        --aclfile /data/acl --appendonly yes --bind 0.0.0.0 --port ${REDIS_PORT} --save 64 1 --save 32 8 --save 2 32768 --repl-backlog-size 256m
+    volumes:
+      - ./data/redis:/data
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+  pg:
+    container_name: wac-pg
+    build:
+      context: ../Dockerfile/postgres
+      dockerfile: Dockerfile
+    image: wac_pg:0.2
+    volumes:
+      - ./data/pg:/var/lib/postgresql/data
+      - ./backup/pg:/backup/pg
+      - ./log/pgbackrest:/var/log/pgbackrest
+      - ./log/pg:/log
+      - ./conf/pgbackrest:/etc/pgbackrest
+    restart: always
+    environment:
+      POSTGRES_DB: ${PG_DB}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_USER: ${PG_USER}
+      PGPORT: ${PG_PORT}
+    ports:
+      - ${PG_PORT}:${PG_PORT}
+    command: >
+      postgres -c max_wal_senders=3 -c log_timezone=PRC -c min_wal_size=80MB -c archive_mode=on -c max_wal_size=8GB -c max_worker_processes=10 -c max_parallel_workers=10 -c max_connections=128 -c effective_io_concurrency=256 -c random_page_cost=1.1 -c maintenance_work_mem=128MB -c checkpoint_completion_target=0.9 -c shared_buffers=512MB -c effective_cache_size=1536MB -c logging_collector=on -c wal_compression=zstd -c default_toast_compression=lz4 -c wal_level=hot_standby
