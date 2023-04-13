@@ -7,7 +7,7 @@ specifiers:
   '@w5/utf8': ^0.0.1
   '@w5/write': ^0.0.1
   dotenv: ^16.0.3
-  nanoid: ^4.0.1
+  nanoid: ^4.0.2
 
 dependencies:
   '@w5/loader': 0.0.3
@@ -16,7 +16,7 @@ dependencies:
   '@w5/utf8': 0.0.1
   '@w5/write': 0.0.1
   dotenv: registry.npmmirror.com/dotenv/16.0.3
-  nanoid: 4.0.1
+  nanoid: 4.0.2
 
 packages:
 
@@ -151,8 +151,8 @@ packages:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
     dev: false
 
-  /nanoid/4.0.1:
-    resolution: {integrity: sha512-udKGtCCUafD3nQtJg9wBhRP3KMbPglUsgV5JVsXhvyBs/oefqb4sqMEhKBBgqZncYowu58p1prsZQBYvAj/Gww==}
+  /nanoid/4.0.2:
+    resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
     engines: {node: ^14 || ^16 || >=18}
     hasBin: true
     dev: false
