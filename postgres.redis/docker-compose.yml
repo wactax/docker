@@ -53,6 +53,7 @@ services:
     volumes:
       - ./data/pg:/var/lib/postgresql/data
       - ./backup/pg:/backup/pg
+      - ./backup/pgbackrest:/backup/pgbackrest
       - ./log/pgbackrest:/var/log/pgbackrest
       - ./log/pg:/log
       - ./conf/pgbackrest:/etc/pgbackrest
