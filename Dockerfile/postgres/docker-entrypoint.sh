@@ -66,7 +66,6 @@ docker_create_db_directories() {
   ensure_dir /var/log/pgbackrest
   ensure_dir /var/spool/pgbackrest
   ensure_dir /backup/pg
-  ensure_dir /backup/pgbackrest
   ensure_dir /log
   ensure_dir /etc/pgbackrest
 }
