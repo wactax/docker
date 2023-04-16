@@ -45,7 +45,7 @@ services:
     ports:
       - ${REDIS_PORT}:${REDIS_PORT}
   pg:
-    container_name: wac-pg
+    container_name: wac-pg:latest
     build:
       context: ../Dockerfile/postgres
       dockerfile: Dockerfile
