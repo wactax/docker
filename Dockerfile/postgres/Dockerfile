@@ -13,7 +13,7 @@ RUN sed -i "s#http://dl-cdn.alpinelinux.org#$(curl -sL https://mirrors.tuna.tsin
 
 COPY plugin /plugin
 
-RUN /plugin/pguint.sh
+RUN /plugin/moreint.sh
 RUN /plugin/md5hash/build.sh
 
 RUN cd /tmp &&\

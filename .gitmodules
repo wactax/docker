@@ -1,3 +1,6 @@
 [submodule "Dockerfile/postgres/plugin/pguint"]
 	path = Dockerfile/postgres/plugin/pguint
 	url = git@github.com:wacfork/pguint.git
+[submodule "Dockerfile/postgres/plugin/moreint"]
+	path = Dockerfile/postgres/plugin/moreint
+	url = git@github.com:xxai-art/moreint.git
