@@ -4,6 +4,6 @@ DIR=$(dirname $(realpath "$0"))
 cd $DIR
 set -ex
 
-cd pguint
+cd moreint
 make
 make install
