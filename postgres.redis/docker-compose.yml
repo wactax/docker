@@ -45,11 +45,9 @@ services:
     ports:
       - ${REDIS_PORT}:${REDIS_PORT}
   pg:
-    container_name: wac-pg:latest
     build:
       context: ../Dockerfile/postgres
       dockerfile: Dockerfile
-    image: wac_pg:0.2
     volumes:
       - ./data/pg:/var/lib/postgresql/data
       - ./backup/pg:/backup/pg
