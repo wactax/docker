@@ -2,6 +2,8 @@ FROM postgres:15-alpine AS pg
 
 ENV PG_BACKREST_VERSION=2.45
 
+RUN apk update && apk add curl
+
 RUN sed -i "s#http://dl-cdn.alpinelinux.org#$(curl -sL https://mirrors.tuna.tsinghua.edu.cn/alpine/MIRRORS.txt | awk '/^http/{print $1}' | xargs -P 100 -I {} sh -c 'echo `curl --max-time 3 --connect-timeout 2 -s -w "%{time_connect}\n" -o /dev/null -m 5 {}` {}' | grep -v "0\.0000" | sort -n | head -1 | awk '{print $2}')#g" /etc/apk/repositories \
   && apk add gcc g++ wget pkgconf dpkg-dev pcre-dev \
   openssl-dev zlib-dev icu-dev readline-dev libxslt-dev \
@@ -30,8 +32,6 @@ RUN \
   rm -r /tmp/pgbackrest-release-$PG_BACKREST_VERSION
 
 FROM postgres:15-alpine
-
-RUN sed -i "s#http://dl-cdn.alpinelinux.org#$(curl -sL https://mirrors.tuna.tsinghua.edu.cn/alpine/MIRRORS.txt | awk '/^http/{print $1}' | xargs -P 100 -I {} sh -c 'echo `curl --max-time 3 --connect-timeout 2 -s -w "%{time_connect}\n" -o /dev/null -m 5 {}` {}' | grep -v "0\.0000" | sort -n | head -1 | awk '{print $2}')#g" /etc/apk/repositories
 
 RUN apk add --no-cache zstd-dev bzip2-dev
 
