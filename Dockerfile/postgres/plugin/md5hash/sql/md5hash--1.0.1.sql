@@ -3,82 +3,76 @@ CREATE TYPE md5hash;
 -- input/output function
 CREATE FUNCTION md5_in (cstring)
   RETURNS md5hash
-  AS md5hash
-;
+  AS 'md5hash'
   LANGUAGE C
   IMMUTABLE STRICT;
-  CREATE FUNCTION md5_out (
-md5hash)
-  RETURNS cstring AS md5hash;
 
-LANGUAGE C
-IMMUTABLE STRICT;
+CREATE FUNCTION md5_out (md5hash)
+  RETURNS cstring
+  AS 'md5hash'
+  LANGUAGE C
+  IMMUTABLE STRICT;
 
 -- functions backing operators (and btree opclass)
 CREATE FUNCTION md5_eq (md5hash, md5hash)
   RETURNS boolean
-  AS md5hash
-;
+  AS 'md5hash'
   LANGUAGE C
   IMMUTABLE STRICT;
-  CREATE FUNCTION md5_neq (
-md5hash, md5hash)
-  RETURNS boolean AS md5hash;
 
-LANGUAGE C
-IMMUTABLE STRICT;
+CREATE FUNCTION md5_neq (md5hash, md5hash)
+  RETURNS boolean
+  AS 'md5hash'
+  LANGUAGE C
+  IMMUTABLE STRICT;
 
 CREATE FUNCTION md5_leq (md5hash, md5hash)
   RETURNS boolean
-  AS md5hash
-;
+  AS 'md5hash'
   LANGUAGE C
   IMMUTABLE STRICT;
-  CREATE FUNCTION md5_lt (
-md5hash, md5hash)
-  RETURNS boolean AS md5hash;
 
-LANGUAGE C
-IMMUTABLE STRICT;
+CREATE FUNCTION md5_lt (md5hash, md5hash)
+  RETURNS boolean
+  AS 'md5hash'
+  LANGUAGE C
+  IMMUTABLE STRICT;
 
 CREATE FUNCTION md5_geq (md5hash, md5hash)
   RETURNS boolean
-  AS md5hash
-;
+  AS 'md5hash'
   LANGUAGE C
   IMMUTABLE STRICT;
-  CREATE FUNCTION md5_gt (
-md5hash, md5hash)
-  RETURNS boolean AS md5hash;
 
-LANGUAGE C
-IMMUTABLE STRICT;
+CREATE FUNCTION md5_gt (md5hash, md5hash)
+  RETURNS boolean
+  AS 'md5hash'
+  LANGUAGE C
+  IMMUTABLE STRICT;
 
 CREATE FUNCTION md5_cmp (md5hash, md5hash)
   RETURNS int
-  AS md5hash
-;
+  AS 'md5hash'
   LANGUAGE C
   IMMUTABLE STRICT;
-  CREATE FUNCTION md5_recv (internal)
-    RETURNS
-md5hash AS md5hash;
 
-LANGUAGE C
-IMMUTABLE STRICT;
+CREATE FUNCTION md5_recv (internal)
+  RETURNS md5hash
+  AS 'md5hash'
+  LANGUAGE C
+  IMMUTABLE STRICT;
 
 CREATE FUNCTION md5_send (md5hash)
   RETURNS bytea
-  AS md5hash
-;
+  AS 'md5hash'
   LANGUAGE C
   IMMUTABLE STRICT;
-  CREATE FUNCTION md5_bytea_in (bytea)
-    RETURNS
-md5hash AS md5hash;
 
-LANGUAGE C
-IMMUTABLE STRICT;
+CREATE FUNCTION md5_bytea_in (bytea)
+  RETURNS md5hash
+  AS 'md5hash'
+  LANGUAGE C
+  IMMUTABLE STRICT;
 
 CREATE TYPE md5hash (
   INPUT = md5_in, OUTPUT = md5_out, INTERNALLENGTH = 16, SEND = md5_send, RECEIVE = md5_recv
