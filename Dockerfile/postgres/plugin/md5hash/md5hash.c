@@ -21,7 +21,6 @@ PG_MODULE_MAGIC;
 #define HASH_LENGTH (HASH_CHARS + 1)
 
 PG_FUNCTION_INFO_V1(md5_bytea_in);
-PG_FUNCTION_INFO_V1(md5_bytea_out);
 
 PG_FUNCTION_INFO_V1(md5_in);
 PG_FUNCTION_INFO_V1(md5_out);
@@ -56,7 +55,8 @@ Datum md5_cmp(PG_FUNCTION_ARGS);
 Datum md5_recv(PG_FUNCTION_ARGS);
 Datum md5_send(PG_FUNCTION_ARGS);
 
-typedef struct hash_t {
+typedef struct hash_t
+{
   unsigned char bytes[HASH_BYTES];
 } hash_t;
 
@@ -70,7 +70,8 @@ encode(hash_t* hash)
 {
   int i;
   static char chars[16] = { '0', '1', '2', '3', '4', '5', '6', '7',
-    '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+                            '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
+                          };
 
   /* 32 chars max (+ a terminator) */
   char* result = (char*)palloc(HASH_LENGTH);
@@ -78,7 +79,8 @@ encode(hash_t* hash)
   memset(result, 0, HASH_LENGTH);
 
   /* first 64 bits */
-  for (i = 0; i < HASH_BYTES; i++) {
+  for (i = 0; i < HASH_BYTES; i++)
+  {
     result[2 * i] = chars[hash->bytes[i] >> 4];
     result[2 * i + 1] = chars[hash->bytes[i] & 0x0F];
   }
@@ -118,17 +120,18 @@ Datum md5_in(PG_FUNCTION_ARGS)
 
   if (strlen(str) != 32)
     ereport(ERROR,
-        (errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
-            errmsg("invalid input length for hash: \"%s\" (expected 32 chars)",
-                str)));
+            (errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
+             errmsg("invalid input length for hash: \"%s\" (expected 32 chars)",
+                    str)));
 
-  for (i = 0; i < 32; i++) {
+  for (i = 0; i < 32; i++)
+  {
     char c = toupper(str[i]);
 
     if (!((c >= 48 && c <= 57) || (c >= 65 && c <= 70)))
       ereport(ERROR,
-          (errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
-              errmsg("invalid character: \"%c\" (expected 0-9, A-F)", c)));
+              (errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
+               errmsg("invalid character: \"%c\" (expected 0-9, A-F)", c)));
   }
 
   /* first half (64 bits = 8 pairs) */
@@ -245,8 +248,8 @@ Datum md5_bytea_in(PG_FUNCTION_ARGS)
   size_t data_length = VARSIZE_ANY_EXHDR(data);
   if (data_length != HASH_BYTES)
     ereport(ERROR,
-        (errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
-            errmsg("invalid input length for hash: expected %d , get %ld", HASH_BYTES, data_length)));
+            (errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
+             errmsg("invalid input length for hash: expected %d , get %ld", HASH_BYTES, data_length)));
 
   memcpy(result->bytes, data->vl_dat, HASH_BYTES);
 
