@@ -91,7 +91,7 @@ __inline__ static char* encode(hash_t* hash)
     result[j++] = chars[triplet & 0x3F];
   }
 
-  uint32_t triplet = (hash->bytes[i] << 16) | (hash->bytes[i + 1] << 8) | hash->bytes[i + 2];
+  uint32_t triplet = (hash->bytes[i] << 16) ;
   result[j++] = chars[(triplet >> 18) & 0x3F];
   result[j++] = chars[(triplet >> 12) & 0x3F];
 
