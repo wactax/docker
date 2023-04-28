@@ -91,6 +91,8 @@ __inline__ static char* encode(hash_t* hash)
     result[j++] = chars[triplet & 0x3F];
   }
 
+  result[j] = 0;
+
   return result;
 }
 
