@@ -17,7 +17,7 @@ PG_MODULE_MAGIC;
 #endif
 
 #define HASH_BYTES 16
-#define HASH_CHARS (HASH_BYTES * 2)
+#define HASH_CHARS 22 // urlsafe base64 编码
 #define HASH_LENGTH (HASH_CHARS + 1)
 
 PG_FUNCTION_INFO_V1(md5_bytea_in);
@@ -65,28 +65,35 @@ __inline__ static char decode(char byte[2]);
 
 /* encode binary value (unsigned char) as a hex value */
 
-__inline__ static char*
-encode(hash_t* hash)
+
+__inline__ static char* encode(hash_t* hash)
 {
   int i;
-  static char chars[16] = { '0', '1', '2', '3', '4', '5', '6', '7',
-                            '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
+  static char chars[64] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+                           'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
+                           'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+                           'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_'
                           };
 
-  /* 32 chars max (+ a terminator) */
+  /* 22 chars max (+ a terminator) */
   char* result = (char*)palloc(HASH_LENGTH);
 
   memset(result, 0, HASH_LENGTH);
 
   /* first 64 bits */
-  for (i = 0; i < HASH_BYTES; i++)
+  int j = 0;
+  for (i = 0; i < HASH_BYTES; i += 3)
   {
-    result[2 * i] = chars[hash->bytes[i] >> 4];
-    result[2 * i + 1] = chars[hash->bytes[i] & 0x0F];
+    uint32_t triplet = (hash->bytes[i] << 16) | (hash->bytes[i + 1] << 8) | hash->bytes[i + 2];
+    result[j++] = chars[(triplet >> 18) & 0x3F];
+    result[j++] = chars[(triplet >> 12) & 0x3F];
+    result[j++] = chars[(triplet >> 6) & 0x3F];
+    result[j++] = chars[triplet & 0x3F];
   }
 
   return result;
 }
+
 
 __inline__ static char
 decode(char byte[2])
