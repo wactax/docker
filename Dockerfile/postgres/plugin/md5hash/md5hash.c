@@ -82,7 +82,7 @@ __inline__ static char* encode(hash_t* hash)
 
   /* first 64 bits */
   int j = 0;
-  for (i = 0; i < HASH_BYTES; i += 3)
+  for (i = 0; i < 21; i += 3)
   {
     uint32_t triplet = (hash->bytes[i] << 16) | (hash->bytes[i + 1] << 8) | hash->bytes[i + 2];
     result[j++] = chars[(triplet >> 18) & 0x3F];
@@ -91,7 +91,8 @@ __inline__ static char* encode(hash_t* hash)
     result[j++] = chars[triplet & 0x3F];
   }
 
-  result[j] = '\0';
+  uint32_t triplet = (hash->bytes[i] << 16) | (hash->bytes[i + 1] << 8) | hash->bytes[i + 2];
+  result[j++] = chars[(triplet >> 18) & 0x3F];
 
   return result;
 }
