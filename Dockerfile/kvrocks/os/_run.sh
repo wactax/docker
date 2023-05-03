@@ -4,9 +4,9 @@ set -ex
 cd /kvrocks
 
 if [ -n "$1" ]; then
-args=$@
+  args=$@
 else
-args="-c ./conf/kvrocks.conf"
+  args="-c /var/lib/kvrocks/kvrocks.conf"
 fi
 
 exec ./bin/kvrocks $args
