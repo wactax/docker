@@ -11,5 +11,5 @@ fi
 
 cd kvrocks
 git checkout .
-sed -i 's/ubuntu:focal/ubuntu:22/g' Dockerfile
+sed -i 's/ubuntu:focal/ubuntu:jammy/g' Dockerfile
 docker build -t kvrocks .
