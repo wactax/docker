@@ -1,4 +1,4 @@
-FROM kvrocks/kvrocks
+FROM kvrocks
 
 COPY ./os/* /kvrocks/
 # ENTRYPOINT ["/bin/bash"]
