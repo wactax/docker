@@ -4,8 +4,10 @@ ENV PG_BACKREST_VERSION=2.45
 
 RUN apk update && apk add curl
 
-RUN sed -i "s#http://dl-cdn.alpinelinux.org#$(curl -sL https://mirrors.tuna.tsinghua.edu.cn/alpine/MIRRORS.txt | awk '/^http/{print $1}' | xargs -P 100 -I {} sh -c 'echo `curl --max-time 3 --connect-timeout 2 -s -w "%{time_connect}\n" -o /dev/null -m 5 {}` {}' | grep -v "0\.0000" | sort -n | head -1 | awk '{print $2}')#g" /etc/apk/repositories \
-  && apk add gcc g++ wget pkgconf dpkg-dev pcre-dev \
+#RUN sed -i "s#http://dl-cdn.alpinelinux.org#$(curl -sL https://mirrors.tuna.tsinghua.edu.cn/alpine/MIRRORS.txt | awk '/^http/{print $1}' | xargs -P 100 -I {} sh -c 'echo `curl --max-time 3 --connect-timeout 2 -s -w "%{time_connect}\n" -o /dev/null -m 5 {}` {}' | grep -v "0\.0000" | sort -n | head -1 | awk '{print $2}')#g" /etc/apk/repositories 
+
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
+  && apk update && apk add gcc g++ wget pkgconf dpkg-dev pcre-dev \
   openssl-dev zlib-dev icu-dev readline-dev libxslt-dev \
   libxml2-dev zstd-dev lz4-dev\
   bzip2-dev zlib-dev libuuid linux-headers \
