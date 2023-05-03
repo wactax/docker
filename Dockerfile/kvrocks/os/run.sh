@@ -7,7 +7,7 @@ set -e
 
 CONF=/kvrocks/conf/kvrocks.conf
 
-conf(){
+conf() {
   sed -i -e "/^$1 /c$2" $CONF
 }
 
@@ -25,6 +25,7 @@ conf dir "dir ${kvrocks_dir-/var/lib/kvrocks}"
 [ -n "$kvrocks_requirepass" ] && conf "# requirepass" "requirepass $kvrocks_requirepass"
 [ -n "$kvrocks_masterauth" ] && conf "# masterauth" "masterauth $kvrocks_masterauth"
 [ -n "$kvrocks_slaveof" ] && conf "# slaveof 127.0.0.1" "slaveof $kvrocks_slaveof"
+[ -n "$kvrocks_dir" ] && conf "dir " "dir $kvrocks_dir"
 
 run=$(cat _run.sh)
 mv _run.sh run.sh
