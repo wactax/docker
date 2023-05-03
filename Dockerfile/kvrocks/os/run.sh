@@ -5,7 +5,7 @@ cd $DIR
 
 set -e
 
-CONF=/kvrocks/conf/kvrocks.conf
+CONF=/var/lib/kvrocks/kvrocks.conf
 
 conf() {
   sed -i -e "/^$1 /c$2" $CONF
