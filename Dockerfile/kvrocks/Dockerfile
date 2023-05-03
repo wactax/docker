@@ -1,4 +1,5 @@
 FROM kvrocks/kvrocks
 
-COPY ./os/ /kvrocks
-CMD ["/kvrocks/run.sh"]
+COPY ./os/* /kvrocks/
+# ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/kvrocks/run.sh"]
