@@ -10,5 +10,6 @@ if [ ! -d "kvrocks" ]; then
 fi
 
 cd kvrocks
+git checkout .
 sed -i 's/ubuntu:focal/ubuntu:22/g' Dockerfile
 docker build -t kvrocks .
