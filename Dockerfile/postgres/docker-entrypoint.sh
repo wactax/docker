@@ -359,5 +359,5 @@ _main() {
 }
 
 if ! _is_sourced; then
-	_main "$@ -c cron.database_name=cron"
+	_main "$@"
 fi
