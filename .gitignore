@@ -1,4 +1,5 @@
 .DS_Store
+/wac/
 docker-*
 /Dockerfile/redis/redis.conf
 /docker-compose.yml
