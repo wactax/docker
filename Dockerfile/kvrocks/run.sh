@@ -18,4 +18,5 @@
 # under the License.
 
 set -ex
+mkdir -p /var/run/kvrocks
 exec ./bin/kvrocks -c /var/lib/kvrocks/kvrocks.conf --dir /var/lib/kvrocks --pidfile /var/run/kvrocks/kvrocks.pid $@ $KVROCKS_ARGS
