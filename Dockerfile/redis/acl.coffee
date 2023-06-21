@@ -17,7 +17,7 @@ gen = (password,file)=>
   password = utf8e password.trim()
   HASH = (Buffer.from (await crypto.subtle.digest("SHA-256", password))).toString 'hex'
 
-  PREFIX = "user default on "
+  PREFIX = "user default on sanitize-payload "
   USER = PREFIX+"##{HASH} ~* &* +@all"
   ACL = join ROOT,"data/redis#{file}/acl"
 
