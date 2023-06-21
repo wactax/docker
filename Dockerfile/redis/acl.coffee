@@ -44,4 +44,4 @@ ENV = join ROOT, 'env'
 env = parse read ENV
 
 gen env.REDIS_PASSWORD,''
-gen env.REDIS_MQ_PASSWORD,'_mq'
+gen env.MQ_PASSWORD,'_mq'
