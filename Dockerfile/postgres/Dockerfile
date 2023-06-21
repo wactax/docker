@@ -19,7 +19,7 @@ COPY plugin /plugin
 
 RUN /plugin/md5hash/build.sh
 RUN /plugin/moreint.sh
-RUN cd /plugin/pg_cron && make && make install
+#RUN cd /plugin/pg_cron && make && make install
 
 RUN cd /tmp &&\
     wget https://ghproxy.com/https://github.com/pgbackrest/pgbackrest/archive/release/$PG_BACKREST_VERSION.tar.gz 

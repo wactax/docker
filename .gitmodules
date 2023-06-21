@@ -1,6 +1,3 @@
 [submodule "Dockerfile/postgres/plugin/moreint"]
 	path = Dockerfile/postgres/plugin/moreint
 	url = git@github.com:wacdev/moreint.git
-[submodule "Dockerfile/postgres/plugin/pg_cron"]
-	path = Dockerfile/postgres/plugin/pg_cron
-	url = git@github.com:citusdata/pg_cron.git
