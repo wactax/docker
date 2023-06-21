@@ -1,4 +1,4 @@
-FROM postgres:15-alpine AS pg
+FROM postgres:16beta1-alpine3.18 AS pg
 
 ENV PG_BACKREST_VERSION=2.45
 
