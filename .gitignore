@@ -1,5 +1,4 @@
-wac
-docker/
+/docker/
 .DS_Store
 /wac/
 docker-*
