@@ -34,7 +34,7 @@ services:
   #     HTTP_CPU_NUM: ${HTTP_CPU_NUM}
   redis:
     container_name: wac-redis
-    image:  redis/redis-stack-server:7.0.6-RC8
+    image:  redis/redis-stack-server:7.2.0-RC1
     restart: always
     environment:
       REDIS_DATA_DIR: /data
