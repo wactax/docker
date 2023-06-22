@@ -1,6 +1,7 @@
-FROM postgres:16beta1-alpine3.18 AS pg
+FROM postgres:15-alpine AS pg
+# FROM postgres:16beta1-alpine3.18 AS pg
 
-ENV PG_BACKREST_VERSION=2.45
+#ENV PG_BACKREST_VERSION=2.45
 
 RUN apk update && apk add curl
 
@@ -34,29 +35,30 @@ RUN /plugin/moreint.sh
 #   ./configure --with-zstd && make && cp pgbackrest /usr/bin/ && \
 #   rm -r /tmp/pgbackrest-release-$PG_BACKREST_VERSION
 
-FROM postgres:16beta1-alpine3.18
+# FROM postgres:16beta1-alpine3.18
+FROM postgres:15-alpine
 
 RUN apk add --no-cache zstd-dev bzip2-dev
 
 ENV PGPORT=9997
-ENV LANG=en_US.utf8
+ENV LANG=zh_CN.utf8
 ENV PGUSER=postgres
 ENV PGDATA=/var/lib/postgresql/data
 ENV PGUSER_UID=70
 ENV PGUSER_GID=70
 
 #COPY ./pgbackrest.sh /pgbackrest.sh
-COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+# COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 
 #RUN chmod +x /pgbackrest.sh /docker-entrypoint.sh
 
 # COPY --from=pg /usr/bin/pgbackrest /usr/bin/pgbackrest
-COPY --from=pg /usr/local/lib/postgresql /usr/local/lib/postgresql
 COPY --from=pg /usr/local/share/postgresql/extension /usr/local/share/postgresql/extension
+COPY --from=pg /usr/local/lib/postgresql /usr/local/lib/postgresql
 
 STOPSIGNAL SIGINT
 
 # start database service
 ENV PATH=/usr/local/pgsql/bin:$PATH
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["postgres"]
+# ENTRYPOINT ["/docker-entrypoint.sh"]
+# CMD ["postgres"]
