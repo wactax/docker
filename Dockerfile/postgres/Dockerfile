@@ -34,7 +34,7 @@ RUN \
   ./configure --with-zstd && make && cp pgbackrest /usr/bin/ && \
   rm -r /tmp/pgbackrest-release-$PG_BACKREST_VERSION
 
-FROM postgres:15-alpine
+FROM postgres:16beta1-alpine3.18
 
 RUN apk add --no-cache zstd-dev bzip2-dev
 
