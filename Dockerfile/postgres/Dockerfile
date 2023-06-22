@@ -21,18 +21,18 @@ RUN /plugin/md5hash/build.sh
 RUN /plugin/moreint.sh
 #RUN cd /plugin/pg_cron && make && make install
 
-RUN cd /tmp &&\
-    wget https://ghproxy.com/https://github.com/pgbackrest/pgbackrest/archive/release/$PG_BACKREST_VERSION.tar.gz 
-
-RUN \
-  # download pgbackrest
-  cd /tmp && \
-  tar xf $PG_BACKREST_VERSION.tar.gz && \
-  rm $PG_BACKREST_VERSION.tar.gz && \
-  # install pgbackrest
-  cd /tmp/pgbackrest-release-$PG_BACKREST_VERSION/src && \
-  ./configure --with-zstd && make && cp pgbackrest /usr/bin/ && \
-  rm -r /tmp/pgbackrest-release-$PG_BACKREST_VERSION
+# RUN cd /tmp &&\
+#     wget https://ghproxy.com/https://github.com/pgbackrest/pgbackrest/archive/release/$PG_BACKREST_VERSION.tar.gz 
+#
+# RUN \
+#   # download pgbackrest
+#   cd /tmp && \
+#   tar xf $PG_BACKREST_VERSION.tar.gz && \
+#   rm $PG_BACKREST_VERSION.tar.gz && \
+#   # install pgbackrest
+#   cd /tmp/pgbackrest-release-$PG_BACKREST_VERSION/src && \
+#   ./configure --with-zstd && make && cp pgbackrest /usr/bin/ && \
+#   rm -r /tmp/pgbackrest-release-$PG_BACKREST_VERSION
 
 FROM postgres:16beta1-alpine3.18
 
@@ -45,12 +45,12 @@ ENV PGDATA=/var/lib/postgresql/data
 ENV PGUSER_UID=70
 ENV PGUSER_GID=70
 
-COPY ./pgbackrest.sh /pgbackrest.sh
+#COPY ./pgbackrest.sh /pgbackrest.sh
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 
-RUN chmod +x /pgbackrest.sh /docker-entrypoint.sh
+#RUN chmod +x /pgbackrest.sh /docker-entrypoint.sh
 
-COPY --from=pg /usr/bin/pgbackrest /usr/bin/pgbackrest
+# COPY --from=pg /usr/bin/pgbackrest /usr/bin/pgbackrest
 COPY --from=pg /usr/local/lib/postgresql /usr/local/lib/postgresql
 COPY --from=pg /usr/local/share/postgresql/extension /usr/local/share/postgresql/extension
 
