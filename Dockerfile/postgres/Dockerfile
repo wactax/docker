@@ -1,5 +1,7 @@
-# FROM postgres:15-alpine AS pg
-FROM postgres:16beta2-alpine3.18 AS pg
+# ARG PG_VERSION=15-alpine
+ARG PG_VERSION=16beta2-alpine3.18 
+
+FROM postgres:$PG_VERSION AS pg
 
 #ENV PG_BACKREST_VERSION=2.45
 
@@ -35,8 +37,7 @@ RUN /plugin/moreint.sh
 #   ./configure --with-zstd && make && cp pgbackrest /usr/bin/ && \
 #   rm -r /tmp/pgbackrest-release-$PG_BACKREST_VERSION
 
-# FROM postgres:15-alpine
-FROM postgres:16beta2-alpine3.18 
+FROM postgres:$PG_VERSION
 
 RUN apk add --no-cache zstd-dev bzip2-dev
 
