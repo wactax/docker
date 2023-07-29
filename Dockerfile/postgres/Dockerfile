@@ -1,5 +1,5 @@
 ARG PG_VERSION=15-alpine
-#ARG PG_VERSION=16beta2-alpine3.18 
+#ARG PG_VERSION=16beta2-alpine
 
 FROM postgres:$PG_VERSION AS pg
 
